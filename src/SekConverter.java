@@ -1,0 +1,17 @@
+public class SekConverter implements CurrencyConverter {
+
+    @Override
+    public CurrencyType getCurrencyType() {
+        return CurrencyType.SEK;
+    }
+
+    @Override
+    public double convertTo(double amount, CurrencyType selectedCurrency) {
+        return switch (selectedCurrency) {
+            case SEK -> amount;
+            case USD -> amount / 9.3;
+            case GBP -> amount / 12.47;
+            case EUR -> amount / 10.91;
+        };
+    }
+}
