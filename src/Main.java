@@ -1,53 +1,64 @@
+import javax.swing.SwingUtilities;
+
 void main() {
 
-    Scanner scanner = new Scanner(System.in);
-    boolean running = true;
-
-    while (running) {
-
-        IO.println("\n=== Currency Converter ===");
+    SwingUtilities.invokeLater(() -> {
+        ConverterGUI gui = new ConverterGUI();
+        gui.setVisible(true);
+    });
 
 
-        IO.println("Available currencies:");
-        for (CurrencyType currency : CurrencyType.values()) {
-            IO.println("- " + currency);
-        }
+                Scanner scanner = new Scanner(System.in);
+                boolean running = true;
+
+                while (running) {
+
+                    IO.println("\n=== Currency Converter ===");
 
 
-        IO.print("\nConvert FROM: ");
-        CurrencyType fromCurrency =
-                CurrencyType.valueOf(scanner.nextLine().toUpperCase());
+                    IO.println("Available currencies:");
+                    for (CurrencyType currency : CurrencyType.values()) {
+                        IO.println("- " + currency);
+                    }
 
 
-        IO.print("Convert TO: ");
-        CurrencyType toCurrency =
-                CurrencyType.valueOf(scanner.nextLine().toUpperCase());
+                    IO.print("\nConvert FROM: ");
+                    CurrencyType fromCurrency =
+                            CurrencyType.valueOf(scanner.nextLine().toUpperCase());
 
 
-        IO.print("Amount: ");
-        double amount = Double.parseDouble(scanner.nextLine());
+                    IO.print("Convert TO: ");
+                    CurrencyType toCurrency =
+                            CurrencyType.valueOf(scanner.nextLine().toUpperCase());
 
 
-        CurrencyConverter converter =
-                ConverterFactory.getConverter(fromCurrency);
-
-        double result = converter.convertTo(amount, toCurrency);
+                    IO.print("Amount: ");
+                    double amount = Double.parseDouble(scanner.nextLine());
 
 
-        IO.println(
-                "\nResult: " + amount + " " + fromCurrency +
-                        " = " + result + " " + toCurrency
-        );
+                    CurrencyConverter converter =
+                            ConverterFactory.getConverter(fromCurrency);
+
+                    double result = converter.convertTo(amount, toCurrency);
 
 
-        IO.print("\nDo you want to convert again? (y/n): ");
-        String choice = scanner.nextLine();
+                    IO.println(
+                            "\nResult: " + amount + " " + fromCurrency +
+                                    " = " + result + " " + toCurrency
+                    );
 
-        if (!choice.equalsIgnoreCase("y")) {
-            running = false;
-        }
-    }
+
+                    IO.print("\nDo you want to convert again? (y/n): ");
+                    String choice = scanner.nextLine();
+
+                    if (!choice.equalsIgnoreCase("y")) {
+                        running = false;
+                    }
+                }
+
 
     IO.println("\nGoodbye");
     scanner.close();
 }
+
+
