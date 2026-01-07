@@ -10,8 +10,8 @@ public class UsdConverter implements CurrencyConverter {
         return switch (selectedCurrency) {
             case USD -> amount;
             case EUR -> amount * 0.85;
-            case GBP -> amount * 0.75;
-            case SEK -> amount * 9.3;
+            case GBP -> amount * 0.74;
+            case SEK -> amount * 9.21;
         };
     }
 }
