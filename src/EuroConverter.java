@@ -11,7 +11,7 @@ public class EuroConverter implements CurrencyConverter {
             case EUR -> amount;
             case USD -> amount * 1.17;
             case GBP -> amount * 0.88;
-            case SEK -> amount * 10.91;
+            case SEK -> amount * 10.81;
         };
     }
 }

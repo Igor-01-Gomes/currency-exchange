@@ -9,9 +9,9 @@ public class GbpConverter implements CurrencyConverter {
     public double convertTo(double amount, CurrencyType selectedCurrency) {
         return switch (selectedCurrency) {
             case GBP -> amount;
-            case SEK -> amount * 12.47;
-            case USD -> amount * 1.34;
-            case EUR -> amount * 1.14;
+            case SEK -> amount * 12.40;
+            case USD -> amount * 1.153;
+            case EUR -> amount * 1.153;
         };
     }
 }
