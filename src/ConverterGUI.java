@@ -2,10 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ConverterGUI extends JFrame {
-    public final JComboBox<CurrencyType> from = new  JComboBox<>(CurrencyType.values());
-    public final JComboBox<CurrencyType> to = new  JComboBox<>(CurrencyType.values());
+    private final CurrencyType[] allCurrencies = CurrencyType.values();
+    public final JComboBox<CurrencyType> from = new JComboBox<>(CurrencyType.values());
+    public final JComboBox<CurrencyType> to = new JComboBox<>(CurrencyType.values());
     private final JTextField amountInput = new JTextField();
-    private final JLabel resultLabel =  new JLabel("Amount: ");
+    private final JLabel resultLabel = new JLabel("Amount: ");
 
     public ConverterGUI() {
         super("Currency Converter");
@@ -60,37 +61,55 @@ public class ConverterGUI extends JFrame {
         gbc.gridwidth = 2;
         panel.add(resultLabel, gbc);
 
-        /*from.setSelectedItem(CurrencyType.SEK);
-        to.setSelectedItem(CurrencyType.USD);*/
+        from.addActionListener(e -> updateToCombo());
+
 
         add(panel);
-
+        updateToCombo();
     }
 
     private void Convert() {
         try {
 
-        CurrencyType fromCurrency = (CurrencyType) from.getSelectedItem();
-        CurrencyType toCurrency = (CurrencyType) to.getSelectedItem();
+            CurrencyType fromCurrency = (CurrencyType) from.getSelectedItem();
+            CurrencyType toCurrency = (CurrencyType) to.getSelectedItem();
 
-        double amount = Double.parseDouble(amountInput.getText().trim());
+            double amount = Double.parseDouble(amountInput.getText().trim());
 
-        CurrencyConverter converter = ConverterFactory.getConverter(fromCurrency);
-        double result = converter.convertTo(amount, toCurrency);
+            CurrencyConverter converter = ConverterFactory.getConverter(fromCurrency);
+            double result = converter.convertTo(amount, toCurrency);
 
-        resultLabel.setText(String.format("Amount: %.2f %s = %.2f %s",  amount, fromCurrency.name(), result,
-                toCurrency.name()));
+            resultLabel.setText(String.format("Amount: %.2f %s = %.2f %s", amount, fromCurrency.name(), result,
+                    toCurrency.name()));
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
                     "Please enter a valid number.",
-                             "Invalid amount",
+                    "Invalid amount",
                     JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
-            }
-
         }
 
     }
+
+    private void updateToCombo() {
+        CurrencyType selectedFrom = (CurrencyType) from.getSelectedItem();
+        CurrencyType currentTo = (CurrencyType) to.getSelectedItem();
+
+        to.removeAllItems();
+
+        for (CurrencyType currency : allCurrencies) {
+            if (!currency.equals(selectedFrom)) {
+                to.addItem(currency);
+            }
+        }
+
+        if (currentTo != null && currentTo != selectedFrom) {
+            to.setSelectedItem(currentTo);
+        }
+    }
+
+}
+
